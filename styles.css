@@ -1,0 +1,105 @@
+.youtube-control-buttons {
+  display: flex;
+  gap: 4px;
+  margin: 4px 0;
+  position: relative;
+  z-index: 100;
+}
+
+.youtube-control-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.youtube-control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.youtube-control-btn:active {
+  transform: translateY(0);
+}
+
+.not-interested-btn {
+  background: rgba(255, 193, 7, 0.1);
+  border-color: rgba(255, 193, 7, 0.3);
+  color: #ffc107;
+}
+
+.not-interested-btn:hover {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.dont-recommend-btn {
+  background: rgba(244, 67, 54, 0.1);
+  border-color: rgba(244, 67, 54, 0.3);
+  color: #f44336;
+}
+
+.dont-recommend-btn:hover {
+  background: rgba(244, 67, 54, 0.2);
+  border-color: rgba(244, 67, 54, 0.4);
+}
+
+.youtube-control-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+[dark] .youtube-control-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+[dark] .youtube-control-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.compact-buttons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 4px;
+}
+
+@media (max-width: 768px) {
+  .youtube-control-buttons {
+    gap: 2px;
+  }
+  
+  .youtube-control-btn {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+  }
+  
+  .youtube-control-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
