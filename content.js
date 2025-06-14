@@ -191,9 +191,9 @@ const observer = new MutationObserver((mutations) => {
     if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.matches && node.matches('ytd-rich-item-renderer')) {
+          if (node.matches && (node.matches('ytd-rich-item-renderer') || node.matches('ytd-compact-video-renderer'))) {
             shouldProcess = true;
-          } else if (node.querySelector && node.querySelector('ytd-rich-item-renderer')) {
+          } else if (node.querySelector && (node.querySelector('ytd-rich-item-renderer') || node.querySelector('ytd-compact-video-renderer'))) {
             shouldProcess = true;
           }
         }
@@ -202,7 +202,9 @@ const observer = new MutationObserver((mutations) => {
   });
   
   if (shouldProcess) {
+    setTimeout(addControlButtons, 100);
     setTimeout(addControlButtons, 500);
+    setTimeout(addControlButtons, 1000);
   }
 });
 
@@ -211,34 +213,37 @@ observer.observe(document.body, {
   subtree: true
 });
 
-// Add observer for compact video cards specifically
-const compactObserver = new MutationObserver((mutations) => {
-  let shouldProcess = false;
-  
-  mutations.forEach((mutation) => {
-    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.matches && node.matches('ytd-compact-video-renderer')) {
-            shouldProcess = true;
-          } else if (node.querySelector && node.querySelector('ytd-compact-video-renderer')) {
-            shouldProcess = true;
-          }
-        }
-      });
-    }
-  });
-  
-  if (shouldProcess) {
+// Handle page navigation with better detection
+let currentUrl = window.location.href;
+
+// Listen for YouTube's app-route-change event
+document.addEventListener('yt-navigate-start', () => {
+  setTimeout(addControlButtons, 100);
+  setTimeout(addControlButtons, 500);
+  setTimeout(addControlButtons, 1000);
+  setTimeout(addControlButtons, 2000);
+});
+
+document.addEventListener('yt-navigate-finish', () => {
+  setTimeout(addControlButtons, 100);
+  setTimeout(addControlButtons, 500);
+  setTimeout(addControlButtons, 1000);
+  setTimeout(addControlButtons, 2000);
+});
+
+// Fallback URL observer
+const urlObserver = new MutationObserver(() => {
+  if (window.location.href !== currentUrl) {
+    currentUrl = window.location.href;
+    setTimeout(addControlButtons, 100);
     setTimeout(addControlButtons, 500);
+    setTimeout(addControlButtons, 1000);
+    setTimeout(addControlButtons, 2000);
   }
 });
 
-compactObserver.observe(document.body, {
-  childList: true,
-  subtree: true
-});
+urlObserver.observe(document, { subtree: true, childList: true });
 
 addControlButtons();
 
-setInterval(addControlButtons, 2000);
+setInterval(addControlButtons, 3000);
